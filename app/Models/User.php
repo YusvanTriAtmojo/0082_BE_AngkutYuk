@@ -49,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Relasi ke model Petugas
      */
-    public function petugass()
+    public function petugas()
     {
         return $this->hasOne(Petugas::class);
     }
