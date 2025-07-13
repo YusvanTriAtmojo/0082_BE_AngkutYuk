@@ -16,8 +16,8 @@ class StorePetugasRequest extends FormRequest
         return [
             'email'        => 'required|string|email|unique:users,email',
             'password'        => 'required|string|min:6',
-            'nama_petugas'    => 'required|string|max:255',
-            'notlp_petugas'   => 'required|string|max:20',
+            'nama_petugas'    => 'required|string|max:20',
+            'notlp_petugas'   => 'required|string|max:13',
             'alamat_petugas'  => 'required|string',
             'status_petugas'  => 'nullable|string|in:tersedia,bertugas',
         ];
