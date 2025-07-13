@@ -23,7 +23,7 @@ class AuthController extends Controller
             $user->id_role  = 3; 
             $user->save();
 
-            $user->pelanggans()->create([
+            $user->pelanggan()->create([
                 'nama_pelanggan'   => $request->name,
                 'notlp_pelanggan'  => $request->notlp_pelanggan,
                 'alamat_pelanggan' => $request->alamat_pelanggan,
