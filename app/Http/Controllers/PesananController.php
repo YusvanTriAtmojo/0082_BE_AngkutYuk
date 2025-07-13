@@ -87,7 +87,7 @@ class PesananController extends Controller
             }
 
             $data = Pesanan::where('petugas_id', $petugas->id)
-                ->with(['kategori:id_kategori,nama_kategori', 'pelanggan:id,nama_pelanggan']) 
+                ->with(['kategori:id_kategori,nama_kategori', 'pelanggan:id,nama_pelanggan', 'kendaraan:id_kendaraan,nama_kendaraan']) 
                 ->latest()
                 ->get();
 
@@ -243,7 +243,7 @@ class PesananController extends Controller
             }
 
             $request->validate([
-                'foto_bukti_selesai' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+                'foto_bukti_selesai' => 'required|image|mimes:jpeg,jpg,png',
             ]);
 
             $path = $request->file('foto_bukti_selesai')->store('bukti_selesai', 'public');
@@ -254,9 +254,16 @@ class PesananController extends Controller
             ]);
             
             if ($pesanan->petugas_id) {
-                $petugas = User::find($pesanan->petugas_id);
+                $petugas = Petugas::find($pesanan->petugas_id);
                 if ($petugas) {
                     $petugas->update(['status_petugas' => 'tersedia']);
+                }
+            }
+
+            if ($pesanan->id_kendaraan) {
+                $kendaraan = Kendaraan::find($pesanan->id_kendaraan);
+                if ($kendaraan) {
+                    $kendaraan->update(['status_kendaraan' => 'tersedia']);
                 }
             }
 
@@ -269,7 +276,6 @@ class PesananController extends Controller
                     'status' => $pesanan->status,
                 ],
             ], 200);
-
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
